@@ -16,6 +16,7 @@ dependencies:
   google_fonts: ^6.2.1
   lucide_icons_flutter: ^2.0.1
   carousel_slider: ^5.0.0
+  permission_handler: ^11.4.0
 
 dev_dependencies:
   flutter_test:
@@ -25,5 +26,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/
     - assets/imagesRif/hoceima/
     - assets/imagesRif/nador/
+    - assets/imagesRif/imzouren/
+    - assets/imagesRif/targuist/
+    - assets/imagesRif/melilla/
+    - assets/imagesRif/montagne/
+    - assets/histoireRif/

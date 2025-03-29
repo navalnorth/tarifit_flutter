@@ -20,22 +20,61 @@ class ImagesScreen extends StatelessWidget {
     'assets/imagesRif/nador/nador5.jpg',
   ];
 
+  final List<String> imagePathsImzouren = const [
+    'assets/imagesRif/imzouren/imzouren1.jpg',
+    'assets/imagesRif/imzouren/imzouren2.jpg',
+    'assets/imagesRif/imzouren/imzouren3.png',
+    'assets/imagesRif/imzouren/imzouren4.jpg',
+    'assets/imagesRif/imzouren/imzouren5.jpg',
+  ];
+
+  final List<String> imagePathsTarguist = const [
+    'assets/imagesRif/targuist/targuist1.jpg',
+    'assets/imagesRif/targuist/targuist2.jpg',
+    'assets/imagesRif/targuist/targuist3.jpeg',
+    'assets/imagesRif/targuist/targuist4.jpg',
+    'assets/imagesRif/targuist/targuist5.jpg',
+  ];
+
+  final List<String> imagePathsMelilla = const [
+    'assets/imagesRif/melilla/melilla1.jpg',
+    'assets/imagesRif/melilla/melilla2.jpg',
+    'assets/imagesRif/melilla/melilla3.jpg',
+    'assets/imagesRif/melilla/melilla4.jpg',
+    'assets/imagesRif/melilla/melilla5.jpg',
+  ];
+
+  final List<String> imagePathsMontagne = const [
+    'assets/imagesRif/montagne/montagne1.jpg',
+    'assets/imagesRif/montagne/montagne2.jpg',
+    'assets/imagesRif/montagne/montagne3.jpg',
+    'assets/imagesRif/montagne/montagne4.jpg',
+    'assets/imagesRif/montagne/montagne5.jpg',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("IMAGES DU RIF", style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.black,
+        title: const Text("IMAGES DU RIF"),
+        foregroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 212, 165, 36),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          child: Column(
-            children: [
-              ImageCarousel(title: "Al Hoceima", imagePaths: imagePathsHoceima),
-              ImageCarousel(title: "Nador", imagePaths: imagePathsNador),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: Column(
+              children: [
+                ImageCarousel(title: "Al Hoceima", imagePaths: imagePathsHoceima),
+                ImageCarousel(title: "Nador", imagePaths: imagePathsNador),
+                ImageCarousel(title: "Imzouren", imagePaths: imagePathsImzouren),
+                ImageCarousel(title: "Targuist", imagePaths: imagePathsTarguist),
+                ImageCarousel(title: "Melilla", imagePaths: imagePathsMelilla),
+                ImageCarousel(title: "Montagnes du Rif", imagePaths: imagePathsMontagne),
+              ],
+            ),
           ),
         ),
       ),

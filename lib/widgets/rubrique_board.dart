@@ -4,7 +4,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class RubriqueBoard extends StatelessWidget {
   final String text;
-  final IconData iconRubrique;
+  final IconData? iconRubrique;
   final Widget? destination;
   final Color? bgcolor;
   final Color? textcolor;
@@ -12,6 +12,7 @@ class RubriqueBoard extends StatelessWidget {
   final double height;
   final double txtsize;
   final VoidCallback? onTapOverride;
+  final Color? borderColor;
 
   const RubriqueBoard({
     super.key,
@@ -24,6 +25,7 @@ class RubriqueBoard extends StatelessWidget {
     this.width = 170,
     this.txtsize = 10,
     this.onTapOverride,
+    this.borderColor,
   });
 
   @override
@@ -45,6 +47,7 @@ class RubriqueBoard extends StatelessWidget {
         decoration: BoxDecoration(
           color: bgcolor,
           borderRadius: BorderRadius.circular(30),
+           border: borderColor != null ? Border.all(color: borderColor!, width: 2) : null,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -52,6 +55,7 @@ class RubriqueBoard extends StatelessWidget {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     width: double.infinity,
@@ -61,18 +65,16 @@ class RubriqueBoard extends StatelessWidget {
                       style: GoogleFonts.poppins( color: textcolor, fontSize: txtsize,fontWeight: FontWeight.w600, ),
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  if (iconRubrique != null) const SizedBox(height: 20),
                 ],
               ),
 
               Positioned(
                 bottom: 10,
                 right: 1,
-                child: CircleAvatar(
-                  backgroundColor: Colors.black,
-                  radius: 20,
-                  child: Icon( iconRubrique, color: Colors.white, size: 20 ),
-                ),
+                child: iconRubrique != null
+                    ? CircleAvatar( backgroundColor: Colors.black, radius: 20, child: Icon(iconRubrique, color: Colors.white, size: 20))
+                    : const SizedBox(),
               ),
             ],
           ),

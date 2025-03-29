@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tarifitino/screens/alphabet_screen.dart';
+import 'package:tarifitino/screens/histoire_screen.dart';
 import 'package:tarifitino/screens/images_screen.dart';
 import 'package:tarifitino/screens/mot_screen.dart';
 import 'package:tarifitino/screens/quiz_screen.dart';
@@ -103,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     RubriqueBoard(
                       text: "Histoire du Rif", 
-                      destination: MotScreen(),
+                      destination: HistoireScreen(),
                       height: 150,
                       txtsize: 17,
                       bgcolor: Color.fromARGB(255, 105, 49, 49),
@@ -114,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const RubriqueBoard(
                   text: "Alphabet Rif", 
-                  destination: MotScreen(),
+                  destination: AlphabetScreen(),
                   height: 150,
                   width: double.infinity,
                   txtsize: 17,
