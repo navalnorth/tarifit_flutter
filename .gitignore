@@ -41,3 +41,25 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Flutter
+build/
+android/app/build/
+ios/Pods/
+.pub-cache/
+.dart_tool/
+
+# Node.js (si jamais tu as du JS quelque part)
+node_modules/
+package-lock.json
+
+# Fichiers volumineux
+*.jar
+*.json
+*.lock
+*.bin
+
+# Ignorer les fichiers générés par Flutter et Android
+android/app/build/
+build/
+*.bin
