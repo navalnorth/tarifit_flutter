@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:tarifitino/screens/admin/admin_panel.dart';
 import 'package:tarifitino/screens/alphabet_screen.dart';
 import 'package:tarifitino/screens/histoire_screen.dart';
 import 'package:tarifitino/screens/images_screen.dart';
 import 'package:tarifitino/screens/mot_screen.dart';
 import 'package:tarifitino/screens/quiz_screen.dart';
+import 'package:tarifitino/services/firebase_auth_service.dart';
 import 'package:tarifitino/widgets/rubrique_board.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,11 +20,31 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthService _authService = AuthService();
+  User? _currentUser;
+  bool _isAdmin = true;
+
+
+
+  Future<void> _checkUserRole(String uid) async {
+    try {
+      DocumentSnapshot userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+      if (userDoc.exists) {
+        setState(() {
+          _isAdmin = userDoc.get('role') == 'admin';
+        });
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Erreur lors de la récupération du rôle: $e");
+      }
+    }
+  }
 
   void checkLoginAndNavigate(BuildContext context, Widget destination) {
-    User? user = _auth.currentUser;
-
-    if (user == null) {
+    if (_currentUser == null) {
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -39,17 +63,57 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       );
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => destination));
+    }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _auth.authStateChanges().listen((User? user) {
+      setState(() {
+        _currentUser = user;
+        _isAdmin = false;
+      });
+
+      if (user != null) {
+        _checkUserRole(user.uid);
+      }
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TARIFITINO", style: TextStyle(color: Colors.white, )),
+        title: const Text("TARIFITINO", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
         centerTitle: true,
+        leading: _isAdmin 
+          ? IconButton(
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminPanel())), 
+              icon: const Icon(Icons.admin_panel_settings, color: Colors.white)
+            ) 
+          : null
+          ,
+        actions: [
+          IconButton(
+            icon: Icon(
+              _currentUser == null ? Icons.person : Icons.logout,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              if (_currentUser == null) {
+                await _authService.signInWithGoogle();
+              } else {
+                await _authService.signOut();
+              }
+            },
+          ),
+        ],
       ),
+      
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
@@ -65,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 150,
                       txtsize: 17,
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(width: 10),
 
                     RubriqueBoard(
                       text: "Conversations", 
@@ -76,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   ],
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 20),
 
                 RubriqueBoard(
                   text: "Quiz",
@@ -89,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     checkLoginAndNavigate(context, const QuizScreen());
                   },
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 20),
 
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       txtsize: 17,
                       bgcolor: Color.fromARGB(255, 212, 165, 36),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(width: 10),
 
                     RubriqueBoard(
                       text: "Histoire du Rif", 
@@ -112,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   ],
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 20),
 
                 const RubriqueBoard(
                   text: "Alphabet Rif", 
@@ -125,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-        )
+        ),
       ),
     );
   }
