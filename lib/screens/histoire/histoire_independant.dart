@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tarifitino/widgets/app_strings.dart';
 
 class HistoireIndependant extends StatelessWidget {
   const HistoireIndependant({super.key});
@@ -7,7 +8,7 @@ class HistoireIndependant extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("L'après-guerre"),
+        title: const Text(HistoireStrings.indTitle),
         centerTitle: true,
       ),
       body: Padding(
@@ -18,19 +19,13 @@ class HistoireIndependant extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                Text(
-                  "Après l'indépendance du Maroc en 1956, le Rif espère une meilleure intégration, mais il est rapidement marginalisé.",
-                  style: Theme.of(context).textTheme.bodyLarge,
+                Text( HistoireStrings.indText1, style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  "En 1958-1959, une révolte éclate contre le pouvoir central, qui y répond par une répression brutale sous Hassan II.",
-                  style: Theme.of(context).textTheme.bodyLarge,
+                Text( HistoireStrings.indText2, style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  "Cette marginalisation économique pousse de nombreux Rifains à émigrer, notamment vers l'Europe, formant d'importantes communautés en Espagne, aux Pays-Bas et en Belgique.",
-                  style: Theme.of(context).textTheme.bodyLarge,
+                Text( HistoireStrings.indText3, style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 16),
           

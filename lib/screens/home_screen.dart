@@ -7,8 +7,10 @@ import 'package:tarifitino/screens/alphabet_screen.dart';
 import 'package:tarifitino/screens/histoire_screen.dart';
 import 'package:tarifitino/screens/images_screen.dart';
 import 'package:tarifitino/screens/mot_screen.dart';
+import 'package:tarifitino/screens/phrases_screen.dart';
 import 'package:tarifitino/screens/quiz_screen.dart';
 import 'package:tarifitino/services/firebase_auth_service.dart';
+import 'package:tarifitino/widgets/app_strings.dart';
 import 'package:tarifitino/widgets/rubrique_board.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -50,14 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Connexion requise"),
-            content: const Text("Connectez-vous avec Google pour accéder à cette section."),
+            title: const Text(HomeScreenStrings.connexionRequise),
+            content: const Text(HomeScreenStrings.connexionMessage),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text("OK"),
+                child: const Text(HomeScreenStrings.ok),
               ),
             ],
           );
@@ -87,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TARIFITINO", style: TextStyle(color: Colors.white)),
+        title: const Text(AppStrings.appTitle, style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
         centerTitle: true,
         leading: _isAdmin 
@@ -124,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RubriqueBoard(
-                      text: "Mots Traduits", 
+                      text: HomeScreenStrings.motsTraduits, 
                       destination: MotScreen(),
                       height: 150,
                       txtsize: 17,
@@ -132,8 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(width: 10),
 
                     RubriqueBoard(
-                      text: "Conversations", 
-                      destination: MotScreen(),
+                      text: HomeScreenStrings.phrases, 
+                      destination: PhrasesScreen(),
                       height: 150,
                       txtsize: 17,
                       bgcolor: Color.fromARGB(255, 14, 101, 201),
@@ -143,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20),
 
                 RubriqueBoard(
-                  text: "Quiz",
+                  text: HomeScreenStrings.quiz,
                   height: 150,
                   width: double.infinity,
                   txtsize: 17,
@@ -159,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RubriqueBoard(
-                      text: "Images du Rif", 
+                      text: HomeScreenStrings.imagesRif, 
                       destination: ImagesScreen(),
                       height: 150,
                       txtsize: 17,
@@ -168,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(width: 10),
 
                     RubriqueBoard(
-                      text: "Histoire du Rif", 
+                      text: HomeScreenStrings.histoireRif, 
                       destination: HistoireScreen(),
                       height: 150,
                       txtsize: 17,
@@ -179,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20),
 
                 const RubriqueBoard(
-                  text: "Alphabet Rif", 
+                  text: HomeScreenStrings.alphabetRif, 
                   destination: AlphabetScreen(),
                   height: 150,
                   width: double.infinity,

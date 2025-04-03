@@ -63,3 +63,6 @@ package-lock.json
 android/app/build/
 build/
 *.bin
+
+android/app/build/
+web/

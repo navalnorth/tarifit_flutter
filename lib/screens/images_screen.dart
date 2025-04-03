@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tarifitino/widgets/app_strings.dart';
 import 'package:tarifitino/widgets/carousel.dart'; // Import du composant
 
 class ImagesScreen extends StatelessWidget {
@@ -56,8 +57,8 @@ class ImagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("IMAGES DU RIF"),
-        foregroundColor: Colors.white,
+        title: const Text(ImagesRifStrings.title),
+        foregroundColor: Colors.black,
         backgroundColor: const Color.fromARGB(255, 212, 165, 36),
         centerTitle: true,
       ),
@@ -67,12 +68,12 @@ class ImagesScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: Column(
               children: [
-                ImageCarousel(title: "Al Hoceima", imagePaths: imagePathsHoceima),
-                ImageCarousel(title: "Nador", imagePaths: imagePathsNador),
-                ImageCarousel(title: "Imzouren", imagePaths: imagePathsImzouren),
-                ImageCarousel(title: "Targuist", imagePaths: imagePathsTarguist),
-                ImageCarousel(title: "Melilla", imagePaths: imagePathsMelilla),
-                ImageCarousel(title: "Montagnes du Rif", imagePaths: imagePathsMontagne),
+                ImageCarousel(title: ImagesRifStrings.hoceima, imagePaths: imagePathsHoceima),
+                ImageCarousel(title: ImagesRifStrings.nador, imagePaths: imagePathsNador),
+                ImageCarousel(title: ImagesRifStrings.imzouren, imagePaths: imagePathsImzouren),
+                ImageCarousel(title: ImagesRifStrings.targuist, imagePaths: imagePathsTarguist),
+                ImageCarousel(title: ImagesRifStrings.melilla, imagePaths: imagePathsMelilla),
+                ImageCarousel(title: ImagesRifStrings.montagne, imagePaths: imagePathsMontagne),
               ],
             ),
           ),

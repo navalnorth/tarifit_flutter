@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tarifitino/widgets/app_strings.dart';
 
 class HistoireMoyen extends StatelessWidget {
   const HistoireMoyen({super.key});
@@ -7,7 +8,7 @@ class HistoireMoyen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Le Moyen Âge"),
+        title: const Text(HistoireStrings.moyenTitle),
         centerTitle: true,
       ),
       body: Padding(
@@ -18,20 +19,11 @@ class HistoireMoyen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 20,),
-                Text(
-                  "L'islam pénètre le Rif au VIIIe siècle, apporté par les conquérants arabes. Toutefois, l'arabisation y reste limitée et la culture amazighe domine.",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                Text( HistoireStrings.moyenText1, style: Theme.of(context).textTheme.bodyLarge ),
                 const SizedBox(height: 16),
-                Text(
-                  "Sous les Almoravides, Almohades et Mérinides, la région oscille entre autonomie et contrôle central. ",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                Text( HistoireStrings.moyenText2, style: Theme.of(context).textTheme.bodyLarge ),
                 const SizedBox(height: 16),
-                Text(
-                  "Le commerce avec l'Andalousie musulmane est florissant, et les routes caravanières reliant le Maroc aux autres territoires musulmans traversent parfois le Rif.",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                Text( HistoireStrings.moyenText3, style: Theme.of(context).textTheme.bodyLarge ),
                 const SizedBox(height: 16),
           
                 Image.asset("assets/histoireRif/moyen.jpg")

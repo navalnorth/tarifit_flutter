@@ -4,6 +4,7 @@ import 'package:tarifitino/screens/histoire/histoire_independant.dart';
 import 'package:tarifitino/screens/histoire/histoire_moyen.dart';
 import 'package:tarifitino/screens/histoire/histoire_prehistoire.dart';
 import 'package:tarifitino/screens/histoire/histoire_resistance.dart';
+import 'package:tarifitino/widgets/app_strings.dart';
 import 'package:tarifitino/widgets/rubrique_board.dart';
 
 class HistoireScreen extends StatelessWidget {
@@ -27,12 +28,12 @@ class HistoireScreen extends StatelessWidget {
               child: Column(
                 children: [
                   RubriqueBoard(
-                    text: "Préhistoire et Antiquité",
+                    text: HistoireStrings.pre,
                     bgcolor: Colors.white,
                     textcolor: Colors.black,
                     width: double.infinity,
                     height: 70,
-                    destination: HistoireRegion(),
+                    destination: HistirePre(),
                     borderColor: Colors.black,
                     iconRubrique: null,
                     txtsize: 20,
@@ -40,7 +41,7 @@ class HistoireScreen extends StatelessWidget {
                   SizedBox(height: 20),
             
                   RubriqueBoard(
-                    text: "Moyen Âge",
+                    text: HistoireStrings.moyen,
                     bgcolor: Colors.white,
                     textcolor: Colors.black,
                     width: double.infinity,
@@ -53,7 +54,7 @@ class HistoireScreen extends StatelessWidget {
                   SizedBox(height: 20),
             
                   RubriqueBoard(
-                    text: "Résistance aux influences étrangères",
+                    text: HistoireStrings.res,
                     bgcolor: Colors.white,
                     textcolor: Colors.black,
                     width: double.infinity,
@@ -66,7 +67,7 @@ class HistoireScreen extends StatelessWidget {
                   SizedBox(height: 20),
             
                   RubriqueBoard(
-                    text: "La colonisation et la guerre du Rif ",
+                    text: HistoireStrings.col,
                     bgcolor: Colors.white,
                     textcolor: Colors.black,
                     width: double.infinity,
@@ -78,7 +79,7 @@ class HistoireScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   RubriqueBoard(
-                    text: "Le Rif sous le Maroc indépendant",
+                    text: HistoireStrings.ind,
                     bgcolor: Colors.white,
                     textcolor: Colors.black,
                     width: double.infinity,

@@ -29,7 +29,7 @@ class AjouterMotsState extends State<AjouterMots> {
 
 
   Stream<List<String>> _fetchCategories() {
-    return FirebaseFirestore.instance.collection("categories").snapshots().map((snapshot) {
+    return FirebaseFirestore.instance.collection("categories_mots").snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => doc["nom"] as String).toList();
     });
   }
@@ -37,7 +37,7 @@ class AjouterMotsState extends State<AjouterMots> {
   Future<void> _addNewCategorie() async {
     String newCategorie = _newCategorieController.text.trim();
     if (newCategorie.isNotEmpty && !_categories.contains(newCategorie)) {
-      await FirebaseFirestore.instance.collection("categories").add({"nom": newCategorie});
+      await FirebaseFirestore.instance.collection("categories_mots").add({"nom": newCategorie});
       
       setState(() {
         _categories = [..._categories, newCategorie];
@@ -203,4 +203,3 @@ class AjouterMotsState extends State<AjouterMots> {
     );
   }
 }
-//yes

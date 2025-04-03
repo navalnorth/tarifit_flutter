@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tarifitino/screens/admin/ajouter_phrases.dart';
 import 'package:tarifitino/screens/admin/ajouter_mots.dart';
 import 'package:tarifitino/screens/admin/ecouter_mots.dart';
+import 'package:tarifitino/screens/admin/ecouter_phrases.dart';
 import 'package:tarifitino/widgets/rubrique_board.dart';
 
 class AdminPanel extends StatefulWidget {
@@ -18,25 +20,26 @@ class _AdminPanelState extends State<AdminPanel> {
       appBar: AppBar(
         title: const Text("ADMIN", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
         centerTitle: true,
       ),
       
-      body: SafeArea(
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const RubriqueBoard(
+                    RubriqueBoard(
                       text: "Ajouter mots", 
                       destination: AjouterMots(),
                       height: 150,
                       txtsize: 17,
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10),
 
                     RubriqueBoard(
                       text: "Ecouter mots", 
@@ -46,7 +49,27 @@ class _AdminPanelState extends State<AdminPanel> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RubriqueBoard(
+                      text: "Ajouter Phrases", 
+                      destination: AjouterPhrases(),
+                      height: 150,
+                      txtsize: 17,
+                    ),
+                    SizedBox(width: 10),
+
+                    RubriqueBoard(
+                      text: "Ecouter phrases", 
+                      destination: EcouterPhrases(),
+                      height: 150,
+                      txtsize: 17,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
