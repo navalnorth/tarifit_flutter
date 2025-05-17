@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tarifitino/screens/admin/ajouter_phrases.dart';
 import 'package:tarifitino/screens/admin/ajouter_mots.dart';
+import 'package:tarifitino/screens/admin/ajouter_quiz.dart';
 import 'package:tarifitino/screens/admin/ecouter_mots.dart';
 import 'package:tarifitino/screens/admin/ecouter_phrases.dart';
+import 'package:tarifitino/screens/admin/ecouter_quiz.dart';
 import 'package:tarifitino/widgets/rubrique_board.dart';
 
 class AdminPanel extends StatefulWidget {
@@ -65,6 +67,27 @@ class _AdminPanelState extends State<AdminPanel> {
                     RubriqueBoard(
                       text: "Ecouter phrases", 
                       destination: EcouterPhrases(),
+                      height: 150,
+                      txtsize: 17,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RubriqueBoard(
+                      text: "Ajouter quiz", 
+                      destination: AjouterQuiz(),
+                      height: 150,
+                      txtsize: 17,
+                    ),
+                    SizedBox(width: 10),
+
+                    RubriqueBoard(
+                      text: "Voir Quiz", 
+                      destination: EcouterQuiz(),
                       height: 150,
                       txtsize: 17,
                     ),

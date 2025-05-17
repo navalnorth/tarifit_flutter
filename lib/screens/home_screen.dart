@@ -6,9 +6,9 @@ import 'package:tarifitino/screens/admin/admin_panel.dart';
 import 'package:tarifitino/screens/alphabet_screen.dart';
 import 'package:tarifitino/screens/histoire_screen.dart';
 import 'package:tarifitino/screens/images_screen.dart';
+import 'package:tarifitino/screens/list_quiz.dart';
 import 'package:tarifitino/screens/mot_screen.dart';
 import 'package:tarifitino/screens/phrases_screen.dart';
-import 'package:tarifitino/screens/quiz_screen.dart';
 import 'package:tarifitino/services/firebase_auth_service.dart';
 import 'package:tarifitino/widgets/app_strings.dart';
 import 'package:tarifitino/widgets/rubrique_board.dart';
@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final AuthService _authService = AuthService();
   User? _currentUser;
   bool _isAdmin = true;
+  // BannerAd? _bannerAd;
 
 
 
@@ -83,6 +84,25 @@ class _HomeScreenState extends State<HomeScreen> {
         _checkUserRole(user.uid);
       }
     });
+
+    // BannerAd(
+    //   adUnitId: AdHelper.bannerAdUnitId,
+    //   request: const AdRequest(),
+    //   size: AdSize.banner,
+    //   listener: BannerAdListener(
+    //     onAdLoaded: (ad) {
+    //       setState(() {
+    //         _bannerAd = ad as BannerAd;
+    //       });
+    //     },
+    //     onAdFailedToLoad: (ad, error) {
+    //       if (kDebugMode) {
+    //         print('Banner ad failed to load: $error');
+    //       }
+    //       ad.dispose();
+    //     },
+    //   ),
+    // ).load();
   }
 
   @override
@@ -122,6 +142,14 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                // if(_bannerAd != null) Align(
+                //   alignment: Alignment.topCenter,
+                //   child: SizedBox(
+                //     width: _bannerAd!.size.width.toDouble(),
+                //     height: _bannerAd!.size.height.toDouble(),
+                //     child: AdWidget(ad: _bannerAd!),
+                //   ),
+                // ),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -152,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   iconRubrique: Icons.play_arrow,
                   bgcolor: const Color.fromARGB(255, 8, 180, 94),
                   onTapOverride: () {
-                    checkLoginAndNavigate(context, const QuizScreen());
+                    checkLoginAndNavigate(context, const ListeQuizScreen());
                   },
                 ),
                 const SizedBox(height: 20),

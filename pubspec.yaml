@@ -39,3 +39,8 @@ flutter:
     - assets/imagesRif/melilla/
     - assets/imagesRif/montagne/
     - assets/histoireRif/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/logo.png

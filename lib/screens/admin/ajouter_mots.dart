@@ -17,6 +17,7 @@ class AjouterMots extends StatefulWidget {
 class AjouterMotsState extends State<AjouterMots> {
   FlutterSoundRecorder? _recorder;
   bool _isRecording = false;
+  bool _isSaving = false;
   String? _audioPath;
 
   final TextEditingController _motFrancaisController = TextEditingController();
@@ -96,6 +97,7 @@ class AjouterMotsState extends State<AjouterMots> {
 
   Future<void> _saveWord() async {
     if (_audioPath == null) return;
+    setState(() => _isSaving = true);
 
     File audioFile = File(_audioPath!);
     String audioUrl = await _uploadAudio(audioFile);
@@ -106,12 +108,14 @@ class AjouterMotsState extends State<AjouterMots> {
       "categorie": _selectedCategorie,
       "audioUrl": audioUrl,
     });
-
-    if (!mounted) return;
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminPanel()));
+    
+    setState(() => _isSaving = false);
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Mot ajouté !")));
+
+    if (!mounted) return;
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminPanel()));
   }
 
 
@@ -194,8 +198,8 @@ class AjouterMotsState extends State<AjouterMots> {
             const SizedBox(height: 50,),
 
             ElevatedButton(
-              onPressed: _saveWord,
-              child: const Text("Sauvegarder"),
+              onPressed: _isSaving ? null : _saveWord,
+              child: _isSaving ? const CircularProgressIndicator() : const Text("Sauvegarder"),
             ),
           ],
         ),

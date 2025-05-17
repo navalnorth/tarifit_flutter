@@ -1,4 +1,4 @@
-package com.example.tarifitino
+package com.navalnorth.tarifitino
 
 import io.flutter.embedding.android.FlutterActivity
 

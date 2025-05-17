@@ -12,7 +12,20 @@
           "package_name": "com.example.tarifitino"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "938262438862-1jt83t37imcm5i7ka3ih7b208r9pirnm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tarifitino",
+            "certificate_hash": "eea1fde35280b9cf83c6af8e5bd0b3dbf92f583d"
+          }
+        },
+        {
+          "client_id": "938262438862-jgb2831q8799if1gvsg157gikcsj2apg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyATTdVujoDoF0FdrGfRlTPL5O2BmVxeBJ8"
@@ -20,7 +33,71 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938262438862-iqhh2ntdciujnmk05asd7gac1f4n8lon.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "938262438862-qncl1bi56k0uptq05102t5i8893ivt4q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tarifitino"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938262438862:android:1cefff7d63eee6619c019f",
+        "android_client_info": {
+          "package_name": "com.navalnorth.tarifitino"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938262438862-6h6tee77g6n05j1akmdum70tktvq62jr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.navalnorth.tarifitino",
+            "certificate_hash": "eea1fde35280b9cf83c6af8e5bd0b3dbf92f583d"
+          }
+        },
+        {
+          "client_id": "938262438862-g55voecg195rofi4m9v6fevi3dtgecsf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.navalnorth.tarifitino",
+            "certificate_hash": "15eba32c0b971843eee6cb4d3852c6bd5af45f2d"
+          }
+        },
+        {
+          "client_id": "938262438862-jgb2831q8799if1gvsg157gikcsj2apg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATTdVujoDoF0FdrGfRlTPL5O2BmVxeBJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938262438862-iqhh2ntdciujnmk05asd7gac1f4n8lon.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "938262438862-qncl1bi56k0uptq05102t5i8893ivt4q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tarifitino"
+              }
+            }
+          ]
         }
       }
     }

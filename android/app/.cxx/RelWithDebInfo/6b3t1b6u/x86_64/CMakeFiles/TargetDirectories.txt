@@ -1,0 +1,2 @@
+C:/Users/moha_/Bureau/Codage/flutter/tarifitino/android/app/.cxx/RelWithDebInfo/6b3t1b6u/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/moha_/Bureau/Codage/flutter/tarifitino/android/app/.cxx/RelWithDebInfo/6b3t1b6u/x86_64/CMakeFiles/rebuild_cache.dir

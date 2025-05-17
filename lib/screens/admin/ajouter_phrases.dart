@@ -17,6 +17,7 @@ class AjouterPhrases extends StatefulWidget {
 class AjouterPhrasesState extends State<AjouterPhrases> {
   FlutterSoundRecorder? _recorder;
   bool _isRecording = false;
+  bool _isSaving = false;
   String? _audioPath;
 
   final TextEditingController _phraseFrancaisController = TextEditingController();
@@ -83,6 +84,7 @@ class AjouterPhrasesState extends State<AjouterPhrases> {
 
   Future<void> _savePhrase() async {
     if (_audioPath == null) return;
+    setState(() => _isSaving = true);
 
     File audioFile = File(_audioPath!);
     String audioUrl = await _uploadAudio(audioFile);
@@ -93,6 +95,8 @@ class AjouterPhrasesState extends State<AjouterPhrases> {
       "categorie": _selectedCategorie,
       "audioUrl": audioUrl,
     });
+
+    setState(() => _isSaving = false);
 
     if (!mounted) return;
     Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminPanel()));
@@ -177,8 +181,8 @@ class AjouterPhrasesState extends State<AjouterPhrases> {
             const SizedBox(height: 50,),
             
             ElevatedButton(
-              onPressed: _savePhrase,
-              child: const Text("Sauvegarder"),
+              onPressed: _isSaving ? null : _savePhrase,
+              child: _isSaving ? const CircularProgressIndicator() : const Text("Sauvegarder"),
             ),
           ],
         ),
