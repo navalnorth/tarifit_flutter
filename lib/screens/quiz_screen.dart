@@ -23,8 +23,13 @@ class _QuizScreenState extends State<QuizScreen> {
   List get questions => widget.quizData["questions"];
 
   void _playAudio(String url) async {
-    await player.stop(); // Stop previous
-    await player.play(UrlSource(url));
+    try {
+      if (!mounted) return;
+      await player.stop();
+      await player.play(UrlSource(url));
+    } catch (e) {
+      debugPrint('Erreur de lecture audio: $e');
+    }
   }
 
   void _selectAnswer(int index) {
@@ -130,6 +135,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   title: Text(rep["texte"]),
                   leading: const Icon(Icons.volume_up),
                   onTap: () {
+                    if (!mounted) return;
                     _playAudio(rep["audioUrl"]);
                     _selectAnswer(index);
                   },

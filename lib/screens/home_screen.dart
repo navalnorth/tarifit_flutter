@@ -9,9 +9,11 @@ import 'package:tarifitino/screens/images_screen.dart';
 import 'package:tarifitino/screens/list_quiz.dart';
 import 'package:tarifitino/screens/mot_screen.dart';
 import 'package:tarifitino/screens/phrases_screen.dart';
+// import 'package:tarifitino/services/ad_banniere.dart';
 import 'package:tarifitino/services/firebase_auth_service.dart';
 import 'package:tarifitino/widgets/app_strings.dart';
 import 'package:tarifitino/widgets/rubrique_board.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -86,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     // BannerAd(
-    //   adUnitId: AdHelper.bannerAdUnitId,
+    //   adUnitId: AdHelper.bannerAdUnitId!,
     //   request: const AdRequest(),
     //   size: AdSize.banner,
     //   listener: BannerAdListener(
@@ -216,6 +218,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   txtsize: 17,
                   bgcolor: Color.fromARGB(255, 109, 107, 224),
                 ),
+                const SizedBox(height: 20),
+
+                // BottomNavigationBar: _bannerAd == null
+                //     ? Container()
+                //     : Container(
+                //       margin: const EdgeInsets.only(bottom: 12),
+                //       height: 52,
+                //       child: AdHelper(ad: _bannerAd!)
+                //     )
+
               ],
             ),
           ),
