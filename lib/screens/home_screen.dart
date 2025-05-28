@@ -9,11 +9,11 @@ import 'package:tarifitino/screens/images_screen.dart';
 import 'package:tarifitino/screens/list_quiz.dart';
 import 'package:tarifitino/screens/mot_screen.dart';
 import 'package:tarifitino/screens/phrases_screen.dart';
-// import 'package:tarifitino/services/ad_banniere.dart';
+import 'package:tarifitino/services/ad_banniere.dart';
 import 'package:tarifitino/services/firebase_auth_service.dart';
 import 'package:tarifitino/widgets/app_strings.dart';
 import 'package:tarifitino/widgets/rubrique_board.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,15 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final AuthService _authService = AuthService();
   User? _currentUser;
   bool _isAdmin = true;
-  // BannerAd? _bannerAd;
 
-
+  BannerAd? _bannerAdTop;
+  BannerAd? _bannerAdBottom;
 
   Future<void> _checkUserRole(String uid) async {
     try {
       DocumentSnapshot userDoc =
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
-
       if (userDoc.exists) {
         setState(() {
           _isAdmin = userDoc.get('role') == 'admin';
@@ -69,13 +68,15 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       );
     } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => destination));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => destination));
     }
   }
 
   @override
   void initState() {
     super.initState();
+
     _auth.authStateChanges().listen((User? user) {
       setState(() {
         _currentUser = user;
@@ -86,47 +87,63 @@ class _HomeScreenState extends State<HomeScreen> {
         _checkUserRole(user.uid);
       }
     });
+    // ✅ Charger les bannières pub
+    _bannerAdTop = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId!,
+      request: const AdRequest(),
+      size: AdSize.fullBanner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {});
+        },
+        onAdFailedToLoad: (ad, error) {
+          if (kDebugMode) {
+            print('Top banner failed to load: $error');
+          }
+          ad.dispose();
+        },
+      ),
+    )..load();
 
-    // BannerAd(
-    //   adUnitId: AdHelper.bannerAdUnitId!,
-    //   request: const AdRequest(),
-    //   size: AdSize.banner,
-    //   listener: BannerAdListener(
-    //     onAdLoaded: (ad) {
-    //       setState(() {
-    //         _bannerAd = ad as BannerAd;
-    //       });
-    //     },
-    //     onAdFailedToLoad: (ad, error) {
-    //       if (kDebugMode) {
-    //         print('Banner ad failed to load: $error');
-    //       }
-    //       ad.dispose();
-    //     },
-    //   ),
-    // ).load();
+    _bannerAdBottom = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId!,
+      request: const AdRequest(),
+      size: AdSize.fullBanner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {});
+        },
+        onAdFailedToLoad: (ad, error) {
+          if (kDebugMode) {
+            print('Bottom banner failed to load: $error');
+          }
+          ad.dispose();
+        },
+      ),
+    )..load();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.appTitle, style: TextStyle(color: Colors.white)),
+        title:
+            const Text(AppStrings.appTitle, style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
         centerTitle: true,
-        leading: _isAdmin 
-          ? IconButton(
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminPanel())), 
-              icon: const Icon(Icons.admin_panel_settings, color: Colors.white)
-            ) 
-          : null
-          ,
+        leading: _isAdmin
+            ? IconButton(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AdminPanel())),
+                icon: const Icon(Icons.admin_panel_settings, color: Colors.white),
+              )
+            : null,
         actions: [
           IconButton(
-            icon: Icon(
-              _currentUser == null ? Icons.person : Icons.logout,
-              color: Colors.white,
-            ),
+            icon: Icon(_currentUser == null ? Icons.person : Icons.logout,
+                color: Colors.white),
             onPressed: () async {
               if (_currentUser == null) {
                 await _authService.signInWithGoogle();
@@ -137,100 +154,93 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // if(_bannerAd != null) Align(
-                //   alignment: Alignment.topCenter,
-                //   child: SizedBox(
-                //     width: _bannerAd!.size.width.toDouble(),
-                //     height: _bannerAd!.size.height.toDouble(),
-                //     child: AdWidget(ad: _bannerAd!),
-                //   ),
-                // ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          children: [
+            if (_bannerAdTop != null)
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: _bannerAdTop!.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAdTop!),
+              ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                child: Column(
                   children: [
-                    RubriqueBoard(
-                      text: HomeScreenStrings.motsTraduits, 
-                      destination: MotScreen(),
-                      height: 150,
-                      txtsize: 17,
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RubriqueBoard(
+                          text: HomeScreenStrings.motsTraduits,
+                          destination: MotScreen(),
+                          height: 150,
+                          txtsize: 17,
+                        ),
+                        SizedBox(width: 10),
+                        RubriqueBoard(
+                          text: HomeScreenStrings.phrases,
+                          destination: PhrasesScreen(),
+                          height: 150,
+                          txtsize: 17,
+                          bgcolor: Color.fromARGB(255, 14, 101, 201),
+                        )
+                      ],
                     ),
-                    SizedBox(width: 10),
-
+                    const SizedBox(height: 20),
                     RubriqueBoard(
-                      text: HomeScreenStrings.phrases, 
-                      destination: PhrasesScreen(),
+                      text: HomeScreenStrings.quiz,
                       height: 150,
+                      width: double.infinity,
                       txtsize: 17,
-                      bgcolor: Color.fromARGB(255, 14, 101, 201),
-                    )
+                      iconRubrique: Icons.play_arrow,
+                      bgcolor: const Color.fromARGB(255, 8, 180, 94),
+                      onTapOverride: () {
+                        checkLoginAndNavigate(context, const ListeQuizScreen());
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RubriqueBoard(
+                          text: HomeScreenStrings.imagesRif,
+                          destination: ImagesScreen(),
+                          height: 150,
+                          txtsize: 17,
+                          bgcolor: Color.fromARGB(255, 212, 165, 36),
+                        ),
+                        SizedBox(width: 10),
+                        RubriqueBoard(
+                          text: HomeScreenStrings.histoireRif,
+                          destination: HistoireScreen(),
+                          height: 150,
+                          txtsize: 17,
+                          bgcolor: Color.fromARGB(255, 105, 49, 49),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const RubriqueBoard(
+                      text: HomeScreenStrings.alphabetRif,
+                      destination: AlphabetScreen(),
+                      height: 150,
+                      width: double.infinity,
+                      txtsize: 17,
+                      bgcolor: Color.fromARGB(255, 109, 107, 224),
+                    ),
+                    const SizedBox(height: 20),
                   ],
                 ),
-                const SizedBox(height: 20),
-
-                RubriqueBoard(
-                  text: HomeScreenStrings.quiz,
-                  height: 150,
-                  width: double.infinity,
-                  txtsize: 17,
-                  iconRubrique: Icons.play_arrow,
-                  bgcolor: const Color.fromARGB(255, 8, 180, 94),
-                  onTapOverride: () {
-                    checkLoginAndNavigate(context, const ListeQuizScreen());
-                  },
-                ),
-                const SizedBox(height: 20),
-
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RubriqueBoard(
-                      text: HomeScreenStrings.imagesRif, 
-                      destination: ImagesScreen(),
-                      height: 150,
-                      txtsize: 17,
-                      bgcolor: Color.fromARGB(255, 212, 165, 36),
-                    ),
-                    SizedBox(width: 10),
-
-                    RubriqueBoard(
-                      text: HomeScreenStrings.histoireRif, 
-                      destination: HistoireScreen(),
-                      height: 150,
-                      txtsize: 17,
-                      bgcolor: Color.fromARGB(255, 105, 49, 49),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                const RubriqueBoard(
-                  text: HomeScreenStrings.alphabetRif, 
-                  destination: AlphabetScreen(),
-                  height: 150,
-                  width: double.infinity,
-                  txtsize: 17,
-                  bgcolor: Color.fromARGB(255, 109, 107, 224),
-                ),
-                const SizedBox(height: 20),
-
-                // BottomNavigationBar: _bannerAd == null
-                //     ? Container()
-                //     : Container(
-                //       margin: const EdgeInsets.only(bottom: 12),
-                //       height: 52,
-                //       child: AdHelper(ad: _bannerAd!)
-                //     )
-
-              ],
+              ),
             ),
-          ),
+            if (_bannerAdBottom != null)
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: _bannerAdBottom!.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAdBottom!),
+              ),
+          ],
         ),
       ),
     );

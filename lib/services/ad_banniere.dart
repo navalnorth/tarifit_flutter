@@ -5,9 +5,8 @@ class AdHelper {
     if (Platform.isAndroid) {
       return 'ca-app-pub-3096583905494889/3902740466';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-3096583905494889/3902740466 ';
+      return 'ca-app-pub-3096583905494889/3902740466';
     }
-
     return null;
   }
 }

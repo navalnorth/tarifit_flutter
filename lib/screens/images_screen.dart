@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tarifitino/widgets/app_strings.dart';
-import 'package:tarifitino/widgets/carousel.dart'; // Import du composant
+import 'package:tarifitino/widgets/carousel.dart';
+import 'package:tarifitino/services/native_ad_widget.dart';
 
-class ImagesScreen extends StatelessWidget {
+class ImagesScreen extends StatefulWidget {
   const ImagesScreen({super.key});
+
+  @override
+  State<ImagesScreen> createState() => _ImagesScreenState();
+}
+
+class _ImagesScreenState extends State<ImagesScreen> {
+  bool _adShown = false;
 
   final List<String> imagePathsHoceima = const [
     'assets/imagesRif/hoceima/hoceima1.jpg',
@@ -52,6 +60,33 @@ class ImagesScreen extends StatelessWidget {
     'assets/imagesRif/montagne/montagne4.jpg',
     'assets/imagesRif/montagne/montagne5.jpg',
   ];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_adShown) {
+      Future.delayed(Duration.zero, () {
+        _showNativeAdPopup();
+        _adShown = true;
+      });
+    }
+  }
+
+  void _showNativeAdPopup() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: const NativeAdWidget(),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
