@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:tarifitino/widgets/app_strings.dart';
 import 'package:tarifitino/widgets/carousel.dart';
 import 'package:tarifitino/services/native_ad_widget.dart';
+import 'package:tarifitino/services/ad_banniere.dart';
 
 class ImagesScreen extends StatefulWidget {
   const ImagesScreen({super.key});
@@ -11,6 +14,8 @@ class ImagesScreen extends StatefulWidget {
 }
 
 class _ImagesScreenState extends State<ImagesScreen> {
+  BannerAd? _bannerAdTop;
+  BannerAd? _bannerAdBottom;
   bool _adShown = false;
 
   final List<String> imagePathsHoceima = const [
@@ -62,6 +67,41 @@ class _ImagesScreenState extends State<ImagesScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    _bannerAdTop = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId!,
+      size: AdSize.fullBanner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) => setState(() {}),
+        onAdFailedToLoad: (ad, error) {
+          if (kDebugMode) {
+            print('Top banner failed: $error');
+          }
+          ad.dispose();
+        },
+      ),
+    )..load();
+
+    _bannerAdBottom = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId!,
+      size: AdSize.fullBanner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) => setState(() {}),
+        onAdFailedToLoad: (ad, error) {
+          if (kDebugMode) {
+            print('Bottom banner failed: $error');
+          }
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_adShown) {
@@ -89,6 +129,13 @@ class _ImagesScreenState extends State<ImagesScreen> {
   }
 
   @override
+  void dispose() {
+    _bannerAdTop?.dispose();
+    _bannerAdBottom?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -98,20 +145,39 @@ class _ImagesScreenState extends State<ImagesScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: Column(
-              children: [
-                ImageCarousel(title: ImagesRifStrings.hoceima, imagePaths: imagePathsHoceima),
-                ImageCarousel(title: ImagesRifStrings.nador, imagePaths: imagePathsNador),
-                ImageCarousel(title: ImagesRifStrings.imzouren, imagePaths: imagePathsImzouren),
-                ImageCarousel(title: ImagesRifStrings.targuist, imagePaths: imagePathsTarguist),
-                ImageCarousel(title: ImagesRifStrings.melilla, imagePaths: imagePathsMelilla),
-                ImageCarousel(title: ImagesRifStrings.montagne, imagePaths: imagePathsMontagne),
-              ],
+        child: Column(
+          children: [
+            if (_bannerAdTop != null)
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: _bannerAdTop!.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAdTop!),
+              ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                  child: Column(
+                    children: [
+                      ImageCarousel(title: ImagesRifStrings.hoceima, imagePaths: imagePathsHoceima),
+                      ImageCarousel(title: ImagesRifStrings.nador, imagePaths: imagePathsNador),
+                      ImageCarousel(title: ImagesRifStrings.imzouren, imagePaths: imagePathsImzouren),
+                      ImageCarousel(title: ImagesRifStrings.targuist, imagePaths: imagePathsTarguist),
+                      ImageCarousel(title: ImagesRifStrings.melilla, imagePaths: imagePathsMelilla),
+                      ImageCarousel(title: ImagesRifStrings.montagne, imagePaths: imagePathsMontagne),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
+            if (_bannerAdBottom != null)
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: _bannerAdBottom!.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAdBottom!),
+              ),
+          ],
         ),
       ),
     );
